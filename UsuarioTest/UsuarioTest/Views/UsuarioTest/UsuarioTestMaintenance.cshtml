@@ -1,0 +1,53 @@
+﻿
+@{
+    ViewBag.Title = "UsuarioTest";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="~/Content/UsuarioTest/UsuarioTest.css" rel="stylesheet" />
+
+<div class="container">
+    <div class="row">
+        <h2>Información de los usuarios</h2>
+    </div>
+    <div class="row">
+        <div class="col-lg-offset-3 col-lg-6 col-md-offset-3 col-md-6 col-sm-12">
+            <div class="table-bordered">
+                <h2 class="text-center panel-heading full_color" onclick="$('#frm_usuarioTest').toggleClass('hidden')">Mantenimiento</h2>
+                <form method="post" id="frm_usuarioTest" class="hidden">
+                    <div class="form-group col-lg-12 col-md-12 col-sm-12">
+                        <label for="select_usuario">Usuario:</label>
+                        <select class="form-control" id="select_usuario" name="select_usuario">
+                            <option value="1">Hola</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-lg-12 col-md-12 col-sm-12">
+                        <label for="txt_name">Nombre:</label>
+                        <input type="text" class="form-control" id="txt_name" name="txt_name">
+                    </div>
+                    <div class="form-group col-lg-12 col-md-12 col-sm-12">
+                        <label for="txt_lastName1">Apellido 1:</label>
+                        <input type="text" class="form-control" id="txt_lastName1" name="txt_lastName1">
+                    </div>
+                    <div class="form-group col-lg-12 col-md-12 col-sm-12">
+                        <label for="txt_lastName2">Apellido 2:</label>
+                        <input type="text" class="form-control" id="txt_lastName2" name="txt_lastName2">
+                    </div>
+                    <div class="form-group col-lg-12 col-md-12 col-sm-12">
+                        <div class="form-check">
+                            <label class="form-check-label">
+                                <input class="form-check-input" type="checkbox" value="1">
+                                Activo
+                            </label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-lg-6 col-lg-offset-2 col-md-6 col-md-offset-2 col-sm-6 col-sm-offset-1">
+                            <button class="btn btn-primary btn-block" type="button">Guardar</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+

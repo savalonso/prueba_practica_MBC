@@ -1,0 +1,39 @@
+﻿
+@{
+    ViewBag.Title = "CompareDates";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="container">
+    <div class="row">
+        <h2>Diferencia entre fechas</h2>
+    </div>
+    <div class="row">
+        <div class="col-lg-6 col-md-6 col-sm-6">
+            <div class="col-lg-6 col-md-6 col-sm-12">
+                <div class="form-group col-lg-12 col-md-12 col-sm-12">
+                    <label for="first_date">Fecha Inicio:</label>
+                    <input type="date" class="form-control" id="first_date" name="first_date">
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-12">
+                <div class="form-group col-lg-12 col-md-12 col-sm-12">
+                    <label for="second_date">Fecha Final:</label>
+                    <input type="date" class="form-control" id="second_date" name="second_date">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row" id="user_alert" style="display: none;">
+        <h3>La fecha de inicio no puede ser mayor a la fecha final</h3>
+    </div>
+    <div class="row">
+        <div class="col-lg-3 col-lg-offset-2 col-md-3 col-md-offset-2 col-sm-12">
+            <button class="btn btn-primary btn-block" type="button" onclick="compareDates('first_date', 'second_date')">Calcular</button>
+        </div>
+    </div>
+    <div class="row" id="result" style="display: none;">
+
+    </div>
+</div>
+
+<script src="~/Scripts/Dates/CompareDate.js"></script>

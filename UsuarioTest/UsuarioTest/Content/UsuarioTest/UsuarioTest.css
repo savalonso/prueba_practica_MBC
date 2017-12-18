@@ -1,0 +1,11 @@
+﻿.full_color {
+    background-color: burlywood;
+    margin-top: 0px;
+}
+
+.center{
+    justify-content:center;
+    align-content:center;
+    align-items:center;
+    background-color:orangered
+}
