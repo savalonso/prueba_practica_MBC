@@ -1,0 +1,133 @@
+//sp de actualizar
+USE [recdes2]
+GO
+/****** Object:  StoredProcedure [tst].[PROC_ACTUALIZAR_HABILITADO]    Script Date: 12/6/2017 7:21:53 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+
+ALTER PROCEDURE [tst].[PROC_ACTUALIZAR_HABILITADO]
+AS 
+BEGIN
+DECLARE CURSOR_HABILITADO CURSOR FOR
+     SELECT IdUsuario
+    FROM TST.Usuariostest
+	WHERE TST.FUNC_LETRAS_A_POR_USUARIO(IdUsuario) = 2;
+OPEN CURSOR_HABILITADO;
+FETCH FROM CURSOR_HABILITADO;
+while(@@FETCH_STATUS)=0
+begin
+UPDATE TST.Usuariostest
+SET Habilitado = 0 
+WHERE CURRENT OF CURSOR_HABILITADO;
+FETCH CURSOR_HABILITADO;
+end
+CLOSE CURSOR_HABILITADO;
+DEALLOCATE CURSOR_HABILITADO;
+END
+
+// sp de insertar y actualizar
+USE [recdes2]
+GO
+/****** Object:  StoredProcedure [tst].[PROC_INSERTA_ACTUALIZA_USUARIO]    Script Date: 12/6/2017 7:24:42 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+ALTER Procedure [tst].[PROC_INSERTA_ACTUALIZA_USUARIO] 
+(
+	@IdUsuario INT,
+	@Usuario varchar(50),
+	@Nombre varchar(50),
+	@Apellido1 varchar(50),
+	@Apellido2 varchar(50),
+	@Habilitado bit
+)
+AS
+BEGIN
+  
+  --INSERCION------
+
+  INSERT INTO TST.Usuariostest
+  (
+    [Usuario],
+	[Nombre],
+	[Apellido1],
+	[Apellido2],
+	[Habilitado]
+  )
+  SELECT LOWER(LEFT(@Nombre,1) + @Apellido1),
+		 @Nombre,
+		 @Apellido1,
+		 @Apellido2,
+		 @Habilitado
+   WHERE NOT EXISTS(SELECT IdUsuario FROM TST.Usuariostest WHERE IdUsuario = @IdUsuario)
+   
+
+   --ACTUALIZACIÓN
+
+   UPDATE TST.Usuariostest
+   SET  [Nombre] = @Nombre,
+		[Apellido1] = @Apellido1,
+		[Apellido2] = @Apellido2,
+		[Habilitado] = @Habilitado
+	WHERE IdUsuario = @IdUsuario
+
+END
+
+//tst Func lista usuarios
+USE [recdes2]
+GO
+/****** Object:  UserDefinedFunction [tst].[FUNC_LISTAR_USUARIOS]    Script Date: 12/6/2017 7:27:21 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+ALTER FUNCTION [tst].[FUNC_LISTAR_USUARIOS]()
+RETURNS TABLE 
+AS
+RETURN 
+(
+	SELECT  IdUsuario,
+			Usuario,
+			Nombre,
+			Apellido1,
+			Apellido2,
+			Habilitado
+	FROM   TST.Usuariostest
+		   
+)
+
+//fun letras a por usuario
+USE [recdes2]
+GO
+/****** Object:  UserDefinedFunction [tst].[FUNC_LETRAS_A_POR_USUARIO]    Script Date: 12/6/2017 7:28:10 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+
+
+ALTER FUNCTION [tst].[FUNC_LETRAS_A_POR_USUARIO]
+(
+	@IdUsuario int
+)
+RETURNS INT  
+AS
+BEGIN
+	DECLARE @CONTADOR INT
+	SELECT  @CONTADOR = (LEN(Usuario) - LEN(REPLACE(Usuario, 'a', '')))
+	FROM   TST.Usuariostest
+	where IdUsuario = @IdUsuario
+
+	RETURN @CONTADOR
+END	   
+
+
+
+
+
